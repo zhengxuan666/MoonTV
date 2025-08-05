@@ -7,6 +7,15 @@ import { getAuthInfoFromCookie } from '@/lib/auth';
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // API Key 验证
+  const apiKey = request.headers.get('X-API-Key');
+  const serverApiKey = process.env.MOONTV_API_KEY;
+
+  // 如果提供了有效的 API Key，则直接放行
+  if (apiKey && serverApiKey && apiKey === serverApiKey) {
+    return NextResponse.next();
+  }
+
   // 跳过不需要认证的路径
   if (shouldSkipAuth(pathname)) {
     return NextResponse.next();
@@ -133,6 +142,6 @@ function shouldSkipAuth(pathname: string): boolean {
 // 配置middleware匹配规则
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|login|warning|api/login|api/register|api/logout|api/cron|api/server-config).*)',
+    '/((?!_next/static|_next/image|favicon.ico|login|warning|api/login|api/register|api/logout|api/cron|api/server-config|api/image-proxy).*)',
   ],
 };
