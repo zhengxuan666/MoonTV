@@ -43,3 +43,10 @@ sitemap-*.xml
 # generated files
 src/lib/runtime.ts
 public/manifest.json
+public/sw.js
+public/workbox-*.js
+
+# documentation files (local only)
+API_DOCUMENTATION_SYNC_RULES.md
+ARCHITECTURE_AND_API_SUMMARY.md
+CLAUDE.md
